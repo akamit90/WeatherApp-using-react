@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-function navbar(props){
-  const [searchInput, setSearchInput] = useState('');
-  const handleSearchInput = (event) => {
-    setSearchInput(event.target.value);
-    
-  };
+import React, { useRef } from 'react';
+
+function navbar(props) {
+  const searchInputRef = useRef(null);
 
   const handleSearchSubmit = (event) => {
-    props.onSearch(searchInput);
-    event.preventDefault()
+    const searchInputValue = searchInputRef.current.value;
+    props.onSearch(searchInputValue);
+    event.preventDefault();
   };
     return(
         <>
@@ -28,8 +26,8 @@ function navbar(props){
         </li>
       </ul>
       <form className="d-flex" role="search">
-        <input value={searchInput} onChange={handleSearchInput} className="form-control me-2" type="text" placeholder="Enter your city name" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit" onClick={handleSearchSubmit}>Search</button>
+        <input ref={searchInputRef} className="form-control me-2" type="text" placeholder="Enter your city name" aria-label="Search"/>
+        <button className="btn btn-outline-success" type="submit" onClick={handleSearchSubmit} >Search</button>
       </form>
     </div>
   </div>
